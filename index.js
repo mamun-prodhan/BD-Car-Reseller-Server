@@ -20,6 +20,7 @@ async function run() {
     try {
         const categoryCollection = client.db('carReseller').collection('categories');
         const carsCollection = client.db('carReseller').collection('cars');
+        const bookingCollection = client.db('carReseller').collection('bookings');
         const reviewsCollection = client.db('carReseller').collection('reviews');
         const blogsCollection = client.db('carReseller').collection('blogs');
 
@@ -58,6 +59,15 @@ async function run() {
             const cursor = blogsCollection.find(query);
             const blogs = await cursor.toArray();
             res.send(blogs);
+        })
+
+        // post orders or bookings in database api
+        app.post('/bookings', async(req, res) => {
+            const booking = req.body
+            console.log(booking);
+            const result = await bookingCollection.insertOne(booking);
+            res.send(result);
+
         })
 
     }
