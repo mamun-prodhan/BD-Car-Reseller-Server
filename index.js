@@ -21,7 +21,6 @@ async function run() {
         const categoryCollection = client.db('carReseller').collection('categories');
         const carsCollection = client.db('carReseller').collection('cars');
         const bookingCollection = client.db('carReseller').collection('bookings');
-        const usersCollection = client.db('carReseller').collection('users');
         const reviewsCollection = client.db('carReseller').collection('reviews');
         const blogsCollection = client.db('carReseller').collection('blogs');
 
@@ -85,12 +84,6 @@ async function run() {
             const result = await bookingCollection.insertOne(booking);
             res.send(result);
 
-        });
-
-        app.post('/users', async(req, res) =>{
-            const user = req.body;
-            const result = await usersCollection.insertMany(user);
-            res.send(result);
         })
 
     }
