@@ -96,16 +96,12 @@ async function run() {
 
     }
     finally {
-
     }
 }
 
 run().catch(err => console.error(err));
 
 
-
-
-// start 
 app.get('/', (req, res) => {
     res.send('assignment 12 server is running')
 })
