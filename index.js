@@ -21,6 +21,7 @@ async function run() {
         const categoryCollection = client.db('carReseller').collection('categories');
         const carsCollection = client.db('carReseller').collection('cars');
         const bookingCollection = client.db('carReseller').collection('bookings');
+        const usersCollection = client.db('carReseller').collection('users');
         const reviewsCollection = client.db('carReseller').collection('reviews');
         const blogsCollection = client.db('carReseller').collection('blogs');
 
@@ -71,9 +72,9 @@ async function run() {
         })
 
         // get the orders based on user email
-        app.get('/bookings', async(req, res) =>{
+        app.get('/bookings', async (req, res) => {
             const email = req.query.email;
-            const query = {email: email};
+            const query = { email: email };
             const bookings = await bookingCollection.find(query).toArray();
             res.send(bookings);
         })
@@ -84,6 +85,13 @@ async function run() {
             const result = await bookingCollection.insertOne(booking);
             res.send(result);
 
+        });
+
+        app.post('/users', async (req, res) => {
+            const user = req.body;
+            console.log(user);
+            const result = await usersCollection.insertOne(user);
+            res.send(result);
         })
 
     }
