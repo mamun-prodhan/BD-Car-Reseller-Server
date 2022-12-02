@@ -35,18 +35,27 @@ async function run() {
         //get data based on categoryName
         app.get('/category', async (req, res) => {
             let query = {};
-            if(req.query.categoryName){
+            if (req.query.categoryName) {
                 query = {
                     categoryName: req.query.categoryName
                 }
             }
-            const cursor = carsCollection.find(query);
-            const cars = await cursor.toArray();
-            res.send(cars);
+            const options = await carsCollection.find(query).toArray();
+
+
+            // const bookingQuery = {productId}
+            // const alreadyBooked = await bookingCollection.find(bookingQuery).toArray();
+            // options.forEach(option =>{
+            //     const optionBooked = alreadyBooked.filter(book => book.productId === option.productId);
+            //     const bookedSlots = optionBooked.productId
+            //     const remainingSlots = option.cars.filter(car=> !bookedSlots.includes(car ))
+            //     console.log(option.productId, remainingSlots)
+            // })
+            res.send(options);
         });
 
         // get all reviews for review section
-        app.get('/reviews', async (req, res) =>{
+        app.get('/reviews', async (req, res) => {
             const query = {}
             const cursor = reviewsCollection.find(query);
             const reviews = await cursor.toArray();
@@ -54,7 +63,7 @@ async function run() {
         });
 
         // get all questin and answer for review section
-        app.get('/blogs', async (req, res) =>{
+        app.get('/blogs', async (req, res) => {
             const query = {}
             const cursor = blogsCollection.find(query);
             const blogs = await cursor.toArray();
@@ -62,9 +71,8 @@ async function run() {
         })
 
         // post orders or bookings in database api
-        app.post('/bookings', async(req, res) => {
+        app.post('/bookings', async (req, res) => {
             const booking = req.body
-            console.log(booking);
             const result = await bookingCollection.insertOne(booking);
             res.send(result);
 
